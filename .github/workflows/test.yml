@@ -1,4 +1,4 @@
-name: lint
+name: test
 
 on: [push]
 
@@ -18,9 +18,8 @@ jobs:
       run: |
         cd geometry_lib
         python -m pip install --upgrade pip
+        pip install -r requirements.txt
         pip install -r requirements.dev.txt
-    - name: Lint
+    - name: Test
       run: |
-        flake8 .
-        black --check .
-        isort --check-only .
+        python -m pytest --cov --cov-report term --cov-report xml:coverage.xml --timeout=1
